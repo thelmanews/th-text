@@ -8,6 +8,7 @@
     "platform": "Polymer/platform#0.3.4",
     "th-animated": "https://github.com/thelmanews/th-animated.git",
     "th-theme": "https://github.com/thelmanews/th-theme.git",
-    "web-animations-js": "https://github.com/web-animations/web-animations-js.git"
+    "web-animations-js": "https://github.com/web-animations/web-animations-js.git",
+    "marked": "~0.3.2"
   }
 }

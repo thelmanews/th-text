@@ -7,7 +7,6 @@
     <core-style ref="theme"></core-style>
     <style>
       :host {
-        width: {{width + "px"}};
         color:{{color}};
       }
 
@@ -80,7 +79,7 @@
     </style>
 
     <!-- Add inline styles for mobile --> 
-    <div id="container" class="{{type}}" style="color:{{color}}; width:{{width}}px; text-align: {{align}};"></div>
+    <div id="container" class="{{type}}" style="color:{{color}}; width:{{width | widthFilter}}; text-align: {{align}};"><content></content></div>
   </template>
   <script src="../marked/lib/marked.js"></script>
 
@@ -93,14 +92,14 @@
         highlighting: '', // enter a color for text highlights
         background: '', // enter a color for background
         opacity: 1, // enter a number between 0 and 1 for background/highlight opacity
-        ready: function() {
-          this.textChanged();
-        },
-        textChanged: function() {
-          var container = this.$.container;
+        domReady: function() {
           if (this.markdown) {
             this.text = this.trim(this.textContent);
           }
+        },
+        textChanged: function() {
+          var container = this.$.container;
+          
           container.innerHTML = this.markdown ? marked(this.text.toString()) : this.textContent;
 
           // Apply text highlight color and opacity for mobile / safari
@@ -149,6 +148,13 @@
             } : null;  
 
           return rgba ? "rgba("+rgba.r+","+rgba.g+","+rgba.b+","+rgba.a+")" : null;
+        },
+        widthFilter: function(value){
+          if(/.*\%/.test(value)){
+            return value;
+          } else {
+            return value + "px";
+          }
         }
       });
 

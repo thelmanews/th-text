@@ -10,6 +10,10 @@
         color:{{color}};
       }
 
+      :host:unresolved {
+        opacity: 0;
+      }
+
       #container > * {
         margin: 0;
         -webkit-margin-before: 0;
@@ -92,7 +96,7 @@
         highlighting: '', // enter a color for text highlights
         background: '', // enter a color for background
         opacity: 1, // enter a number between 0 and 1 for background/highlight opacity
-        domReady: function() {
+        ready: function() {
           if (this.markdown) {
             this.text = this.trim(this.textContent);
           }

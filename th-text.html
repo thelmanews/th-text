@@ -10,9 +10,9 @@
         color:{{color}};
       }
 
-     /* :host:unresolved {
+      :host:unresolved {
         opacity: 0;
-      }*/
+      }
 
       #container > * {
         margin: 0;
@@ -27,7 +27,7 @@
       }
 
       #container.highlighting > * {
-        /*line-height: 1.2;*/
+        line-height: 1.2;
         display: inline;
         background-color: {{highlighting}}; /* Not supported in mobile */
         box-shadow: 0.3em 0 0 {{highlighting}}, -0.3em 0 0 {{highlighting}}; /* Not supported in mobile */
@@ -83,7 +83,7 @@
     </style>
 
     <!-- Add inline styles for mobile --> 
-    <div id="container" class="{{type}}" style="color:{{color}}; width:{{width | widthFilter}}; text-align: {{align}};"><content unresolved></content></div>
+    <div id="container" class="{{type}}" style="color:{{color}}; width:{{width | widthFilter}}; text-align: {{align}};"><content></content></div>
   </template>
   <script src="../marked/lib/marked.js"></script>
 

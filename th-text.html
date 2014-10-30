@@ -106,14 +106,6 @@
           
           container.innerHTML = this.markdown ? marked(this.text.toString()) : this.textContent;
 
-          // Add target="_blank" to all links
-          var links = container.querySelectorAll('a'),
-              linksLength = links.length;
-              
-          for (var i=0; i<linksLength; i++){
-            links[i].setAttribute('target', '_blank');
-          }
-
           // Apply text highlight color and opacity for mobile / safari
           if(this.highlighting){
             if (this.opacity < 1){

@@ -96,12 +96,25 @@
         highlighting: '', // enter a color for text highlights
         background: '', // enter a color for background
         opacity: 1, // enter a number between 0 and 1 for background/highlight opacity
+        CHILD_NODE_STR: 'h1, h2, h3, h4, h5, h6, p, li', // elements that will have their text dynamically sized.
+        FONT_SIZE_DIFF: 20, // Max deviation from original font size.
+        TEXT_COMPRESSION: 1, // Parameter to tweak sizing / visual Q & A
         ready: function() {
+
           if (this.markdown) {
             this.text = this.trim(this.textContent);
           }
+
+        },
+        domReady: function() {
+
+          this.forEachTextChild(this.sizeText);
+          // Each child in the CHILD_NODE_STR has had it's text
+          // dynamically sized.
+
         },
         textChanged: function() {
+
           var container = this.$.container;
           
           container.innerHTML = this.markdown ? marked(this.text.toString()) : this.textContent;
@@ -137,6 +150,59 @@
             this.$.container.style.backgroundColor = this.background;
             this.$.container.style.boxShadow = "0.3em 0 0 "+this.background+", -0.3em 0 0 "+this.background;            
           }
+
+        },
+        getFontSize: function(el) {
+
+          return Math.round(
+            parseFloat(
+              window.getComputedStyle(el)['font-size']
+            )
+          );
+
+        },
+        /*
+         * Precondition: A list of selectors are supplied <string> `this.CHILD_NODE_STR`.
+         * A function `func` is supplied that takes one argument, a reference to a document element.
+         *
+         * Postcondition: `func` is called on each child node whos selector matches on
+         * in the supplied selector string `this.CHILD_NODE_STR`.
+         */
+        forEachTextChild: function(func) {
+
+          if (typeof func === 'undefined') return false;
+
+          var children = this.$.container.querySelectorAll(this.CHILD_NODE_STR);
+          var i = children.length-1;
+
+          for (i >= 0; i--;) {
+            func.call(this, children[i]);
+            // func called for this child.
+          }
+          // func called on all children.
+
+        },
+        /*
+         * Precondition: A reference to a DOM element, el.
+         *
+         * Postcondition: The fontSize is adjusted.
+         */
+        sizeText: function(el) {
+
+          var currFs = this.getFontSize(el);
+          var newFs = Math.max(
+            Math.min( 
+              this.$.container.offsetWidth / (this.TEXT_COMPRESSION * 10),
+              parseFloat(currFs + this.FONT_SIZE_DIFF)
+            ), 
+            parseFloat(currFs - this.FONT_SIZE_DIFF)
+          );
+          // The internal text fills container.
+
+          el.style.fontSize = newFs + 'px';
+
+          console.log('OLD FS :: ', currFs);
+          console.log('NEW FS :: ', newFs);
 
         },
         trim: function(str) { 

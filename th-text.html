@@ -1,7 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../th-animated/th-animated.html">
 
-
 <polymer-element name="th-text" extends="th-animated" attributes="align type markdown text width highlighting background opacity">
   <template>
     <core-style ref="theme"></core-style>
@@ -83,7 +82,7 @@
     </style>
 
     <!-- Add inline styles for mobile --> 
-    <div id="container" class="{{type}}" style="color:{{color}}; width:{{width | widthFilter}}; text-align: {{align}};"><content></content></div>
+    <div id="container" class="{{type}}" style="color:{{color}}; text-align: {{align}};"><content></content></div>
   </template>
   <script src="../marked/lib/marked.js"></script>
 
@@ -97,7 +96,7 @@
         background: '', // enter a color for background
         opacity: 1, // enter a number between 0 and 1 for background/highlight opacity
         CHILD_NODE_STR: 'h1, h2, h3, h4, h5, h6, p, li', // elements that will have their text dynamically sized.
-        FONT_SIZE_DIFF: 20, // Max deviation from original font size.
+        FONT_SIZE_DIFF: 3, // Max deviation from original font size.
         TEXT_COMPRESSION: 1, // Parameter to tweak sizing / visual Q & A
         ready: function() {
 
@@ -148,7 +147,7 @@
             // Inline styles for mobile version while Polymer does not support use of 
             // variables in style tags on mobile devices
             this.$.container.style.backgroundColor = this.background;
-            this.$.container.style.boxShadow = "0.3em 0 0 "+this.background+", -0.3em 0 0 "+this.background;            
+            this.$.container.style.boxShadow = "0.3em 0 0 "+this.background+", -0.3em 0 0 "+this.background;
           }
 
         },

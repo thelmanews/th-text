@@ -152,13 +152,6 @@
             } : null;  
 
           return rgba ? "rgba("+rgba.r+","+rgba.g+","+rgba.b+","+rgba.a+")" : null;
-        },
-        widthFilter: function(value){
-          if(/.*\%/.test(value)){
-            return value;
-          } else {
-            return value + "px";
-          }
         }
       });
 

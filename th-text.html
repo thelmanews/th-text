@@ -139,7 +139,8 @@
 
         },
         trim: function(str) { 
-          return str.replace(/^[^\S\n]+/gm,'');
+          // Remove white space and convert straight quotes into smart quotes
+          return str.replace(/^[^\S\n]+/gm,'').replace(/"(?=\w|$)/g, "&#8220;").replace(/"/g, "&#8221;");
         },
         hexToRgba: function(hex){
           var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

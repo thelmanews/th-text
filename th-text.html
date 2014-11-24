@@ -82,7 +82,9 @@
     </style>
 
     <!-- Add inline styles for mobile --> 
-    <div id="container" class="{{type}}" style="color:{{color}}; width:{{width | widthFilter}}; text-align: {{align}};"><content></content></div>
+    <div id="container" class="{{type}}" style="color:{{color}}; width:{{width | widthFilter}}; text-align: {{align}};">
+        <content></content>
+    </div>
   </template>
   <script src="../marked/lib/marked.js"></script>
 
@@ -98,12 +100,14 @@
         ready: function() {
           if (this.markdown) {
             this.text = this.trim(this.textContent);
+          } else {
+            this.text = this.textContent;
           }
         },
         textChanged: function() {
           var container = this.$.container;
           
-          container.innerHTML = this.markdown ? marked(this.text.toString()) : this.textContent;
+          container.innerHTML = this.markdown ? marked(this.text.toString()) : ("<span >"+this.text+"</span>");
 
           // Apply text highlight color and opacity for mobile / safari
           if(this.highlighting){
@@ -117,10 +121,12 @@
             // Inline styles for mobile version while Polymer does not support use of 
             // variables in style tags on mobile devices
             var contentNodes = container.children;
+
             for (var i=0; i<contentNodes.length; i++){
               contentNodes[i].style.backgroundColor = this.highlighting;
               contentNodes[i].style.boxShadow = "0.3em 0 0 "+this.highlighting+", -0.3em 0 0 "+this.highlighting;
             }
+            
           }
 
           // Apply background color and opacity for mobile / safari

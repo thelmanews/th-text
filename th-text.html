@@ -124,7 +124,7 @@
 
             for (var i=0; i<contentNodes.length; i++){
               contentNodes[i].style.backgroundColor = this.highlighting;
-              contentNodes[i].style.boxShadow = "0.3em 0 0 "+this.highlighting+", -0.3em 0 0 "+this.highlighting;
+              contentNodes[i].style.boxShadow = "0 0 0 0.2em "+this.highlighting+", 0 0 0 0.2em "+this.highlighting;
             }
             
           }
@@ -140,7 +140,7 @@
             // Inline styles for mobile version while Polymer does not support use of 
             // variables in style tags on mobile devices
             this.$.container.style.backgroundColor = this.background;
-            this.$.container.style.boxShadow = "0.3em 0 0 "+this.background+", -0.3em 0 0 "+this.background;            
+            this.$.container.style.boxShadow = "0 0 0 0.2em "+this.background+",0 0 0 0.2em "+this.background;            
           }
 
         },

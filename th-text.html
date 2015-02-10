@@ -112,6 +112,8 @@
 
           // Apply text highlight color and opacity for mobile / safari
           if(this.highlighting){
+            var themeFont = window.CoreStyle.g.theme.font;
+
             if (this.opacity < 1){
               this.highlighting = this.hexToRgba(this.highlighting);
             }
@@ -124,6 +126,9 @@
             var contentNodes = container.children;
 
             for (var i=0; i<contentNodes.length; i++){
+              if (themeFont == "'open-sans', sans-serif"){
+                contentNodes[i].style.lineHeight = 1.35; // this particular font needs more line height for descenders
+              }
               contentNodes[i].style.backgroundColor = this.highlighting;
               contentNodes[i].style.boxShadow = ".2em 0 0 0 0 "+this.highlighting+", -.2em 0 0 0 0 "+this.highlighting;
             }

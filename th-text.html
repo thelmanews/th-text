@@ -33,6 +33,10 @@
         box-shadow: 0.2em 0 0 0 {{highlighting}}, -0.2em 0 0 0 {{highlighting}}; /* Not supported in mobile */
       }
 
+      #container > * {
+        -webkit-margin-after: 0.5em;
+      }
+
       strong {
         font-weight: bold;
       }
@@ -99,8 +103,21 @@
         background: '', // enter a color for background
         opacity: 1, // enter a number between 0 and 1 for background/highlight opacity
         ready: function() {
+          
+          marked.setOptions({
+            renderer: new marked.Renderer(),
+            gfm: true, // Enable GitHub flavored markdown.
+            tables: true, // Enable GFM tables. This option requires the gfm option to be true.
+            breaks: true, // Enable GFM line breaks. This option requires the gfm option to be true.
+            pedantic: false, // Conform to obscure parts of markdown.pl as much as possible. Don't fix any of the original markdown bugs or poor behavior.
+            sanitize: true, // Sanitize the output. Ignore any HTML that has been input.
+            smartLists: true, // Use smarter list behavior than the original markdown. May eventually be default with the old behavior moved into pedantic.
+            smartypants: true // Use "smart" typograhic punctuation for things like quotes and dashes.
+          });
+
           if (this.markdown) {
             this.text = this.trim(this.textContent);
+
           } else {
             this.text = this.textContent;
           }
@@ -150,8 +167,11 @@
 
         },
         trim: function(str) { 
-          // Remove white space and convert straight quotes into smart quotes
-          return str.replace(/^[^\S\n]+/gm,'').replace(/"(?=\w|$)/g, "&#8220;").replace(/"/g, "&#8221;");
+          // Remove white space 
+          return str.replace(/^[^\S\n]+/gm,'');
+
+          // Convert straight quotes into smart quotes (not necessary if 'smartypants' option is on)
+          // return str.replace(/^[^\S\n]+/gm,'').replace(/"(?=\w|$)/g, "&#8220;").replace(/"/g, "&#8221;");
         },
         hexToRgba: function(hex){
           var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

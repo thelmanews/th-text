@@ -15,10 +15,15 @@
         opacity: 0;
       }
 
+      #container {
+        padding: 5px;
+        box-sizing: border-box;
+      }
+
       #container > * {
         margin: 0;
         -webkit-margin-before: 0;
-        -webkit-margin-after: 0;
+        -webkit-margin-after: 0.5em;
         text-align: {{align}};
       }
 
@@ -30,11 +35,7 @@
         line-height: 1.2;
         display: inline;
         background-color: {{highlighting}}; /* Not supported in mobile */
-        box-shadow: 0.2em 0 0 0 {{highlighting}}, -0.2em 0 0 0 {{highlighting}}; /* Not supported in mobile */
-      }
-
-      #container > * {
-        -webkit-margin-after: 0.5em;
+        box-shadow:  0 0 0 0.2em{{highlighting}}, 0 0 0 -0.2em {{highlighting}}; /* Not supported in mobile */
       }
 
       strong {
@@ -103,7 +104,6 @@
         background: '', // enter a color for background
         opacity: 1, // enter a number between 0 and 1 for background/highlight opacity
         ready: function() {
-          
           marked.setOptions({
             renderer: new marked.Renderer(),
             gfm: true, // Enable GitHub flavored markdown.
@@ -147,7 +147,7 @@
                 contentNodes[i].style.lineHeight = 1.35; // this particular font needs more line height for descenders
               }
               contentNodes[i].style.backgroundColor = this.highlighting;
-              contentNodes[i].style.boxShadow = ".2em 0 0 0 0 "+this.highlighting+", -.2em 0 0 0 0 "+this.highlighting;
+              contentNodes[i].style.boxShadow = "0 0 0 .2em "+this.highlighting;
             }
             
           }

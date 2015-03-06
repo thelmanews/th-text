@@ -169,7 +169,6 @@
         background: '', // enter a color for background
         opacity: 1, // enter a number between 0 and 1 for background/highlight opacity
         ready: function() {
-          console.log(this.textContent);
           marked.setOptions({
             renderer: new marked.Renderer(),
             gfm: true, // Enable GitHub flavored markdown.
@@ -189,9 +188,13 @@
           }
         },
         textChanged: function() {
-          var container = this.$.container;
-          
+          var container = this.$.container,
+              contentNodes = container.children;
+
           container.innerHTML = this.markdown ? marked(this.text.toString()) : ("<span >"+this.text+"</span>");
+          
+          // Remove extra padding after paragraphs on the last node (it's apparent w/background color)
+          contentNodes[contentNodes.length-1].style.webkitMarginAfter = 0;
 
           // Apply text highlight color and opacity for mobile / safari
           if(this.highlighting){
@@ -206,8 +209,6 @@
 
             // Inline styles for mobile version while Polymer does not support use of 
             // variables in style tags on mobile devices
-            var contentNodes = container.children;
-
             for (var i=0; i<contentNodes.length; i++){
               contentNodes[i].style.backgroundColor = this.highlighting;
               contentNodes[i].style.boxShadow = "0 0 0 4px "+this.highlighting;

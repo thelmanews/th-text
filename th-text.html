@@ -30,12 +30,33 @@
       #container.background {
         background-color: {{background}}; /* Not supported in mobile */
       }
+    
+      /* Highlighting creates the need for more line-height, which varies by class */
+      #container.highlighting > p {
+        line-height: 1.2;
+      }
+
+
+      #container.highlighting.headline > p {
+        line-height: 1.3; 
+      }
+
+      #container.highlighting.mainpoint > p, 
+      #container.highlighting.submainpoint > p, 
+      #container.highlighting.subpoint > p, 
+      #container.highlighting.chart > p {
+        line-height: 1.4; 
+      }
+
+      #container.highlighting.label > p {
+        line-height: 1.45; 
+      }
+
+
 
       #container.highlighting > * {
-        line-height: 1.2;
         display: inline;
         background-color: {{highlighting}}; /* Not supported in mobile */
-        box-shadow:  0 0 0 0.2em{{highlighting}}, 0 0 0 -0.2em {{highlighting}}; /* Not supported in mobile */
       }
 
       strong {
@@ -64,26 +85,70 @@
 
       h1 {
         font-size: 2em;
+        line-height: 1.25;
       }
+
 
       h2 {
         font-size: 1.5em;
+        line-height: 1.3;
       }
 
       h3 {
        font-size: 1.17em; 
+       line-height: 1.4;
       }
 
       h4 {
         font-size: 1em;
+        line-height: 1.4;
       }
 
       h5 {
         font-size: 0.83em;
+        line-height: 1.4;
       }
 
       h6 {
         font-size: 0.67em;
+        line-height: 1.4;
+      }
+
+      /* Font specific adjustments for lineheight in highlighted text */
+      #container.highlighting.large-headline > p.chronicle {
+        line-height: 1.1;
+      }
+      #container.highlighting.large-headline > p.open-sans {
+        line-height: 1.4;
+      }
+
+      #container.highlighting.caps > p.open-sans,
+      #container.highlighting.headline > p.open-sans,
+      #container.highlighting.submainpoint > p.open-sans {
+        line-height: 1.5;
+      }
+
+      #container.highlighting.mainpoint > p.open-sans,
+      #container.highlighting.subpoint > p.open-sans,
+      #container.highlighting.chart > p.open-sans,
+      #container.highlighting.label > p.open-sans {
+        line-height: 1.6;
+      }
+
+      h1.open-sans, h2.open-sans {
+        line-height: 1.45;
+      }
+
+      h3.open-sans {
+        line-height: 1.5;
+      }
+
+      h4.open-sans {
+        line-height: 1.55;
+      }
+
+      h5.open-sans {
+        line-height: 1.6;
       }
     </style>
 
@@ -104,6 +169,7 @@
         background: '', // enter a color for background
         opacity: 1, // enter a number between 0 and 1 for background/highlight opacity
         ready: function() {
+          console.log(this.textContent);
           marked.setOptions({
             renderer: new marked.Renderer(),
             gfm: true, // Enable GitHub flavored markdown.
@@ -143,13 +209,18 @@
             var contentNodes = container.children;
 
             for (var i=0; i<contentNodes.length; i++){
-              if (themeFont == "'open-sans', sans-serif"){
-                contentNodes[i].style.lineHeight = 1.35; // this particular font needs more line height for descenders
-              }
               contentNodes[i].style.backgroundColor = this.highlighting;
-              contentNodes[i].style.boxShadow = "0 0 0 .2em "+this.highlighting;
+              contentNodes[i].style.boxShadow = "0 0 0 4px "+this.highlighting;
+
+              if (themeFont == "'open-sans', sans-serif"){
+                contentNodes[i].classList.add("open-sans");
+              }
+
+              if (themeFont == "'Chronicle Display', serif"){
+                contentNodes[i].classList.add("chronicle");
+                contentNodes[i].style.boxShadow = "0 0 0 5px "+this.highlighting;
+              }
             }
-            
           }
 
           // Apply background color and opacity for mobile / safari
@@ -183,6 +254,9 @@
             } : null;  
 
           return rgba ? "rgba("+rgba.r+","+rgba.g+","+rgba.b+","+rgba.a+")" : null;
+        },
+        textContentChanged: function(){
+          this.ready();
         }
       });
 

@@ -194,7 +194,9 @@
           container.innerHTML = this.markdown ? marked(this.text.toString()) : ("<span >"+this.text+"</span>");
           
           // Remove extra padding after paragraphs on the last node (it's apparent w/background color)
-          contentNodes[contentNodes.length-1].style.webkitMarginAfter = 0;
+          if (contentNodes.length) {
+            contentNodes[contentNodes.length-1].style.webkitMarginAfter = 0;
+          }
 
           // Apply text highlight color and opacity for mobile / safari
           if(this.highlighting){

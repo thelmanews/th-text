@@ -188,10 +188,10 @@
           }
         },
         textChanged: function() {
-          var container = this.$.container,
-              contentNodes = container.children;
+          var container = this.$.container;
+              container.innerHTML = this.markdown ? marked(this.text.toString()) : ("<span >"+this.text+"</span>");
 
-          container.innerHTML = this.markdown ? marked(this.text.toString()) : ("<span >"+this.text+"</span>");
+          var contentNodes = container.children;
           
           // Remove extra padding after paragraphs on the last node (it's apparent w/background color)
           if (contentNodes.length) {

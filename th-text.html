@@ -239,6 +239,15 @@
             this.$.container.style.backgroundColor = this.background;
           }
 
+          // If not mobile device, open links in new tab
+          if (window.matchMedia("(min-width: 500px)").matches) {
+            var links = this.shadowRoot.querySelectorAll('a');
+            [].forEach.call(links, function(link) {
+              link.setAttribute('target', '_blank');
+            })
+          } 
+          
+          
         },
         trim: function(str) { 
           // Remove white space 

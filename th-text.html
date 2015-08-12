@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../th-animated/th-animated.html">
 
-<polymer-element name="th-text" extends="th-animated" attributes="align type markdown highlighting background opacity">
+<polymer-element name="th-text" extends="th-animated" attributes="align type markdown highlighting background opacity wrapText">
 
   <template>
     <core-style ref="theme"></core-style>
@@ -18,12 +18,6 @@
       #container {
         padding: 5px;
         box-sizing: border-box;
-        /* Break text to wrap when very long and not broken (i.e. URLs) */
-        word-wrap: break-word;
-        word-break: break-word;
-        -webkit-hyphens: auto;
-           -moz-hyphens: auto;
-                hyphens: auto;
       }
 
       #container > * {
@@ -57,8 +51,6 @@
       #container.highlighting.label > p {
         line-height: 1.45; 
       }
-
-
 
       #container.highlighting > * {
         display: inline;
@@ -174,6 +166,7 @@
         highlighting: '', // enter a color for text highlights
         background: '', // enter a color for background
         opacity: 1, // enter a number between 0 and 1 for background/highlight opacity
+        wrapText: false, // auto breaks / hyphenates long text if true
         attached: function(){
           var self = this;
           var contentObserver = new MutationObserver(function (mutations) {
@@ -236,6 +229,13 @@
                 contentNodes[i].style.boxShadow = "0 0 0 5px "+this.highlighting;
               }
             }
+          }
+
+          // Apply word-wrap class to container if option is true
+          if (this.wrapText){
+            container.classList.add("word-wrap");
+          } else {
+            container.classList.remove("word-wrap");
           }
 
           // Apply background color and opacity for mobile / safari
